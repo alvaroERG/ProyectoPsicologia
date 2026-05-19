@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EntreTiempo.Psicología</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a4a6b;
+    --teal: #5ba8a8;
+    --teal-light: #7ec8c8;
+    --teal-pale: #e8f5f5;
+    --navy-dark: #0d2e42;
+    --white: #ffffff;
+    --gray-light: #f7f9f9;
+    --gray-mid: #d0dede;
+    --text-dark: #1a2e38;
+    --text-mid: #4a6a75;
+    --text-light: #8aabba;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 72px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-mid);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .nav-logo-icon {
+    display: flex; gap: 3px;
+  }
+  .nav-logo-icon .sq {
+    width: 28px; height: 28px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; font-weight: 600; color: white;
+  }
+  .sq-navy { background: var(--navy); }
+  .sq-teal { background: var(--teal); }
+  .nav-logo-text { line-height: 1.1; }
+  .nav-logo-text .brand { font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 15px; color: var(--navy-dark); letter-spacing: 0.04em; }
+  .nav-logo-text .sub { font-size: 10px; color: var(--teal); letter-spacing: 0.15em; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a { text-decoration: none; font-size: 14px; color: var(--text-mid); transition: color .2s; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-cta {
+    background: var(--navy); color: white;
+    border: none; border-radius: 6px;
+    padding: 9px 22px; font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer; transition: background .2s;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--teal); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 100px 5vw 60px;
+    gap: 60px;
+    background: linear-gradient(135deg, var(--white) 60%, var(--teal-pale) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: var(--teal-pale);
+    opacity: 0.6;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -120px; left: 30%;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(91,168,168,0.08);
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--teal); border: 1px solid var(--teal-light);
+    padding: 5px 14px; border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  .hero-content h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 4vw, 3.8rem);
+    font-weight: 500; line-height: 1.15;
+    color: var(--navy-dark);
+    margin-bottom: 20px;
+  }
+  .hero-content h1 em { color: var(--teal); font-style: italic; }
+  .hero-content p {
+    font-size: 16px; line-height: 1.8;
+    color: var(--text-mid); max-width: 460px;
+    margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--navy); color: white;
+    border: none; border-radius: 7px;
+    padding: 13px 28px; font-size: 15px;
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+    transition: all .2s; text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--teal); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--navy);
+    border: 1.5px solid var(--navy); border-radius: 7px;
+    padding: 12px 28px; font-size: 15px;
+    font-family: 'DM Sans', sans-serif; cursor: pointer;
+    transition: all .2s; text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { background: var(--teal-pale); }
+
+  /* Hero visual cards */
+  .hero-visual { position: relative; z-index: 1; }
+  .stat-cards {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .stat-card {
+    background: white; border-radius: 14px;
+    padding: 22px; box-shadow: 0 4px 24px rgba(26,74,107,0.1);
+    transition: transform .3s;
+  }
+  .stat-card:hover { transform: translateY(-4px); }
+  .stat-card.accent { background: var(--navy); color: white; }
+  .stat-card.accent .stat-label { color: var(--teal-light); }
+  .stat-card.tall { grid-row: span 2; display: flex; flex-direction: column; justify-content: space-between; }
+  .stat-number { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 600; line-height: 1; margin-bottom: 6px; color: var(--navy); }
+  .stat-card.accent .stat-number { color: white; }
+  .stat-label { font-size: 12px; color: var(--text-mid); letter-spacing: 0.05em; }
+  .stat-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--teal-light); line-height: 1.5; margin-top: auto; }
+  .stat-icon { font-size: 28px; margin-bottom: 12px; }
+
+  /* ── SERVICES ── */
+  .services { padding: 100px 5vw; background: var(--gray-light); }
+  .section-header { text-align: center; margin-bottom: 60px; }
+  .section-tag {
+    display: inline-block; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 14px;
+  }
+  .section-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 500; color: var(--navy-dark);
+    margin-bottom: 14px;
+  }
+  .section-header p { font-size: 16px; color: var(--text-mid); max-width: 500px; margin: 0 auto; line-height: 1.7; }
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; max-width: 1100px; margin: 0 auto;
+  }
+  .service-card {
+    background: white; border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid var(--gray-mid);
+    transition: all .3s; cursor: pointer;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--teal);
+    transform: scaleX(0); transition: transform .3s;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(26,74,107,0.12); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--teal-pale); display: flex; align-items: center;
+    justify-content: center; margin-bottom: 20px; font-size: 22px;
+  }
+  .service-card h3 { font-size: 17px; font-weight: 500; color: var(--navy-dark); margin-bottom: 10px; }
+  .service-card p { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+  .service-modes { display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap; }
+  .mode-tag {
+    font-size: 11px; padding: 3px 10px; border-radius: 20px;
+    background: var(--teal-pale); color: var(--teal);
+    border: 1px solid rgba(91,168,168,0.3);
+  }
+
+  /* ── PRICING ── */
+  .pricing { padding: 100px 5vw; }
+  .pricing-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px; max-width: 1000px; margin: 0 auto;
+  }
+  .price-card {
+    border-radius: 16px; padding: 30px 24px;
+    border: 1.5px solid var(--gray-mid);
+    transition: all .3s;
+  }
+  .price-card:hover { border-color: var(--teal); box-shadow: 0 8px 30px rgba(91,168,168,0.15); }
+  .price-card.featured { background: var(--navy); border-color: var(--navy); color: white; }
+  .price-card .price-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+  .price-card.featured .price-label { color: var(--teal-light); }
+  .price-card .price-name { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 500; margin-bottom: 16px; color: var(--navy-dark); }
+  .price-card.featured .price-name { color: white; }
+  .price-amount { font-size: 2.2rem; font-weight: 300; color: var(--navy); margin-bottom: 6px; }
+  .price-card.featured .price-amount { color: white; }
+  .price-desc { font-size: 13px; color: var(--text-mid); margin-bottom: 20px; line-height: 1.6; }
+  .price-card.featured .price-desc { color: rgba(255,255,255,0.7); }
+  .price-detail { font-size: 12px; color: var(--text-light); }
+  .price-card.featured .price-detail { color: var(--teal-light); }
+
+  /* ── SCHEDULE ── */
+  .schedule { padding: 60px 5vw; background: var(--teal-pale); }
+  .schedule-inner { max-width: 800px; margin: 0 auto; }
+  .schedule h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 500;
+    color: var(--navy-dark); margin-bottom: 6px;
+  }
+  .schedule > .schedule-inner > p { color: var(--text-mid); margin-bottom: 30px; }
+  .schedule-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .day-card {
+    background: white; border-radius: 12px;
+    padding: 16px; border: 1px solid var(--gray-mid);
+  }
+  .day-name { font-size: 12px; font-weight: 500; color: var(--navy); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .day-time { font-size: 12px; color: var(--text-mid); line-height: 1.8; }
+  .day-time span { display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy-dark); color: white;
+    padding: 60px 5vw 30px;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px; padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.8; max-width: 300px; margin-top: 14px; }
+  .footer-col h4 { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 16px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color .2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom { text-align: center; padding-top: 24px; font-size: 13px; color: rgba(255,255,255,0.35); }
+
+  /* ── CHATBOT ── */
+  #chat-toggle {
+    position: fixed; bottom: 28px; right: 28px; z-index: 200;
+    width: 60px; height: 60px; border-radius: 50%;
+    background: var(--navy); border: none; cursor: pointer;
+    box-shadow: 0 6px 24px rgba(26,74,107,0.4);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .3s; font-size: 26px;
+  }
+  #chat-toggle:hover { background: var(--teal); transform: scale(1.08); }
+  #chat-toggle .badge {
+    position: absolute; top: -2px; right: -2px;
+    width: 16px; height: 16px; border-radius: 50%;
+    background: #e74c3c; border: 2px solid white;
+    font-size: 9px; color: white;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  #chat-window {
+    position: fixed; bottom: 95px; right: 28px; z-index: 200;
+    width: 370px; max-height: 500px;
+    background: white; border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(26,74,107,0.2);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    transform: scale(0.9) translateY(20px);
+    opacity: 0; pointer-events: none;
+    transition: all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  #chat-window.open {
+    transform: scale(1) translateY(0);
+    opacity: 1; pointer-events: all;
+  }
+
+  .chat-header {
+    background: var(--navy); padding: 18px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .chat-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--teal); display: flex; align-items: center;
+    justify-content: center; font-size: 18px; flex-shrink: 0;
+  }
+  .chat-header-info { flex: 1; }
+  .chat-header-info .chat-name { font-size: 14px; font-weight: 500; color: white; }
+  .chat-header-info .chat-status { font-size: 11px; color: var(--teal-light); display: flex; align-items: center; gap: 5px; }
+  .chat-status-dot { width: 6px; height: 6px; border-radius: 50%; background: #2ecc71; }
+  .chat-close {
+    background: none; border: none; color: rgba(255,255,255,0.6);
+    cursor: pointer; font-size: 20px; line-height: 1; transition: color .2s;
+  }
+  .chat-close:hover { color: white; }
+
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 18px 16px;
+    display: flex; flex-direction: column; gap: 14px;
+    background: var(--gray-light);
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--gray-mid); border-radius: 2px; }
+
+  .msg { display: flex; flex-direction: column; max-width: 88%; }
+  .msg.bot { align-self: flex-start; }
+  .msg.user { align-self: flex-end; }
+  .msg-bubble {
+    padding: 11px 14px; border-radius: 14px;
+    font-size: 13.5px; line-height: 1.6;
+  }
+  .msg.bot .msg-bubble {
+    background: white; color: var(--text-dark);
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .msg.user .msg-bubble {
+    background: var(--navy); color: white;
+    border-bottom-right-radius: 4px;
+  }
+  .msg-time { font-size: 10px; color: var(--text-light); margin-top: 4px; padding: 0 4px; }
+  .msg.user .msg-time { text-align: right; }
+
+  .chat-options { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+  .chat-option-btn {
+    background: var(--teal-pale); color: var(--navy);
+    border: 1px solid var(--teal-light); border-radius: 20px;
+    padding: 6px 14px; font-size: 12px;
+    cursor: pointer; transition: all .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .chat-option-btn:hover { background: var(--teal); color: white; border-color: var(--teal); }
+  .chat-option-btn:disabled { opacity: 0.5; cursor: default; }
+
+  .chat-input-area {
+    padding: 12px 14px; background: white;
+    border-top: 1px solid var(--gray-mid);
+    display: flex; gap: 8px; align-items: flex-end;
+  }
+  #chat-input {
+    flex: 1; border: 1px solid var(--gray-mid); border-radius: 22px;
+    padding: 10px 16px; font-size: 13.5px;
+    font-family: 'DM Sans', sans-serif; color: var(--text-dark);
+    outline: none; resize: none;
+    transition: border-color .2s; max-height: 100px;
+    overflow-y: auto;
+  }
+  #chat-input:focus { border-color: var(--teal); }
+  #chat-send {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--navy); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background .2s;
+  }
+  #chat-send:hover { background: var(--teal); }
+  #chat-send svg { width: 16px; height: 16px; fill: white; }
+
+  .typing-indicator {
+    display: flex; align-items: center; gap: 4px; padding: 8px;
+  }
+  .typing-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--text-light);
+    animation: typing 1.2s infinite;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 90px; }
+    .hero-visual { display: none; }
+    .nav-links { display: none; }
+    .footer-inner { grid-template-columns: 1fr; gap: 30px; }
+    #chat-window { width: calc(100vw - 30px); right: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <div class="sq sq-navy">H</div>
+      <div class="sq sq-teal">M</div>
+    </div>
+    <div class="nav-logo-text">
+      <div class="brand">ENTRETIEMPO</div>
+      <div class="sub">Psicología</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#precios">Tarifas</a>
+    <a href="#horarios">Horarios</a>
+    <a href="#contacto">Contacto</a>
+    <a href="conocenos.html">Conócenos</a>
+    <a href="#" class="nav-cta" onclick="openChat()">Consultar ahora</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Acompañamiento psicológico · Cúcuta & Virtual</div>
+    <h1>El reloj no entiende de <em>angustia…</em><br>nosotros sí.</h1>
+    <p>En EntreTiempo.Psicología te ofrecemos un espacio seguro para cuidar tu salud mental, con atención presencial en Cúcuta y sesiones virtuales para todo el país.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary" onclick="openChat(); return false;">💬 Hablar con nosotros</a>
+      <a href="#servicios" class="btn-secondary">Ver servicios</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stat-cards">
+      <div class="stat-card accent tall">
+        <div style="font-size: 32px; margin-bottom: 12px;">🌿</div>
+        <div>
+          <div class="stat-number" style="color:white">5+</div>
+          <div class="stat-label">Años acompañando</div>
+        </div>
+        <div class="stat-quote">"Tu bienestar no puede esperar al momento perfecto."</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🧠</div>
+        <div class="stat-number">4</div>
+        <div class="stat-label">Áreas de atención</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-number">5</div>
+        <div class="stat-label">Días a la semana</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div class="section-header">
+    <div class="section-tag">Lo que ofrecemos</div>
+    <h2>Nuestros servicios</h2>
+    <p>Atención personalizada para personas, empresas, colegios e instituciones de salud.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🌱</div>
+      <h3>Acompañamiento psicológico</h3>
+      <p>Sesiones individuales de terapia orientadas a tu bienestar emocional y mental. Un espacio tuyo, sin prisa.</p>
+      <div class="service-modes">
+        <span class="mode-tag">Presencial (Cúcuta)</span>
+        <span class="mode-tag">Virtual</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏢</div>
+      <h3>Capacitación para empresas</h3>
+      <p>Programas de bienestar organizacional, manejo del estrés y salud mental en el trabajo.</p>
+      <div class="service-modes">
+        <span class="mode-tag">Presencial (Cúcuta)</span>
+        <span class="mode-tag">Virtual</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎓</div>
+      <h3>Capacitación educativa</h3>
+      <p>Talleres para docentes, primera infancia, escuela de padres y eventos de socialización.</p>
+      <div class="service-modes">
+        <span class="mode-tag">Presencial (Cúcuta)</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏥</div>
+      <h3>Capacitación en salud</h3>
+      <p>Formación especializada para equipos de salud en habilidades psicológicas y comunicación asertiva.</p>
+      <div class="service-modes">
+        <span class="mode-tag">Presencial (Cúcuta)</span>
+        <span class="mode-tag">Virtual</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="precios">
+  <div class="section-header">
+    <div class="section-tag">Tarifas</div>
+    <h2>Inversión en tu bienestar</h2>
+    <p>Precios transparentes para que puedas planificar tu proceso sin sorpresas.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card featured">
+      <div class="price-label">⭐ Más solicitado</div>
+      <div class="price-name">Acompañamiento Psicológico</div>
+      <div class="price-amount">$70.000</div>
+      <div class="price-desc">Sesión individual de hasta 1 hora 20 minutos. Presencial en Cúcuta o virtual.</div>
+      <div class="price-detail">📅 Lunes–Viernes · Agenda flexible</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">Educación</div>
+      <div class="price-name">Talleres Educativos</div>
+      <div class="price-amount">$120K–$150K</div>
+      <div class="price-desc">Talleres para docentes y primera infancia. Escuela de padres $200.000 por encuentro.</div>
+      <div class="price-detail">📍 Solo presencial en Cúcuta</div>
+    </div>
+    <div class="price-card">
+      <div class="price-label">Empresas &amp; Salud</div>
+      <div class="price-name">Capacitaciones</div>
+      <div class="price-amount">A consultar</div>
+      <div class="price-desc">Cotización personalizada según el número de participantes y la temática requerida.</div>
+      <div class="price-detail">📍 Presencial o virtual</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="horarios">
+  <div class="schedule-inner">
+    <div class="section-tag">Disponibilidad</div>
+    <h2>Horarios de atención</h2>
+    <p style="color:var(--text-mid); margin-bottom:28px; font-size:15px;">Para acompañamiento psicológico (sesiones individuales)</p>
+    <div class="schedule-grid">
+      <div class="day-card">
+        <div class="day-name">Lunes</div>
+        <div class="day-time"><span>9:00 a.m. – 12:00 m</span><span>2:00 p.m. – 6:00 p.m.</span></div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Martes</div>
+        <div class="day-time"><span>9:00 a.m. – 12:00 m</span><span>2:00 p.m. – 6:00 p.m.</span></div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Miércoles</div>
+        <div class="day-time"><span>9:00 a.m. – 12:00 m</span><span>2:00 p.m. – 6:00 p.m.</span></div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Jueves</div>
+        <div class="day-time"><span>9:00 a.m. – 12:00 m</span><span>2:00 p.m. – 6:00 p.m.</span></div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">Viernes</div>
+        <div class="day-time"><span>9:00 a.m. – 2:00 p.m.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contacto">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-logo-icon" style="margin-bottom:10px">
+        <div class="sq sq-navy">H</div>
+        <div class="sq sq-teal">M</div>
+      </div>
+      <div class="brand" style="color:white;font-size:16px;letter-spacing:.04em">ENTRETIEMPO</div>
+      <div class="sub" style="color:var(--teal-light);letter-spacing:.15em;font-size:10px">— PSICOLOGÍA —</div>
+      <p>El reloj no entiende de angustia. Nosotros sí.<br>Cuida de tu salud mental como cuidas de tu tiempo.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <a href="#servicios">Acompañamiento psicológico</a>
+      <a href="#servicios">Capacitación empresas</a>
+      <a href="#servicios">Ámbito educativo</a>
+      <a href="#servicios">Ámbito salud</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="#">📍 Cúcuta, Norte de Santander</a>
+      <a href="#">🌐 Atención virtual (Colombia)</a>
+      <a href="#" onclick="openChat(); return false;">💬 Chatear ahora</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 EntreTiempo.Psicología · Todos los derechos reservados
+  </div>
+</footer>
+
+<!-- CHAT TOGGLE -->
+<button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir chat">
+  <span id="chat-icon">💬</span>
+  <div class="badge">1</div>
+</button>
+
+<!-- CHAT WINDOW -->
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">🌿</div>
+    <div class="chat-header-info">
+      <div class="chat-name">Asistente EntreTiempo</div>
+      <div class="chat-status">
+        <div class="chat-status-dot"></div>
+        En línea ahora
+      </div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">×</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-area">
+    <textarea id="chat-input" placeholder="Escribe tu mensaje..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button id="chat-send" onclick="sendUserMessage()" aria-label="Enviar">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const SERVICES_INFO = `
+Eres el asistente virtual de EntreTiempo.Psicología, una empresa de psicología ubicada en Cúcuta, Colombia.
+
+SERVICIOS:
+1. Acompañamiento psicológico individual - presencial (solo Cúcuta) o virtual. Precio: $70.000 por sesión (1h a 1h20min).
+2. Capacitación para empresas - presencial (solo Cúcuta) o virtual. Precio a coordinar según necesidad.
+3. Capacitación ámbito educativo - SOLO presencial en Cúcuta. Incluye: talleres a docentes ($120.000-$150.000), primera infancia ($120.000-$150.000), escuela de padres ($200.000 por encuentro), eventos de socialización (precio a consultar).
+4. Capacitación en ámbito de salud - presencial (solo Cúcuta) o virtual. Precio a coordinar.
+
+HORARIOS de acompañamiento psicológico:
+- Lunes a Jueves: 9:00am-12:00m y 2:00pm-6:00pm
+- Viernes: 9:00am-2:00pm
+
+INSTRUCCIONES:
+- Responde SIEMPRE en español, de manera cálida, empática y profesional.
+- Sé conciso (máximo 3-4 oraciones por respuesta).
+- Si preguntan por precios, da la información exacta.
+- Si preguntan por agendar, diles que pueden escribir al WhatsApp o que un asesor los contactará.
+- Usa emojis con moderación (1-2 por mensaje máximo).
+- Nunca inventes información que no esté en este contexto.
+- Si no sabes algo, di que un asesor humano les puede ayudar.
+`;
+
+let chatState = {
+  open: false,
+  initialized: false,
+  userName: '',
+  step: 'awaitingName'
+};
+
+function toggleChat() {
+  chatState.open = !chatState.open;
+  const win = document.getElementById('chat-window');
+  const badge = document.querySelector('#chat-toggle .badge');
+  win.classList.toggle('open', chatState.open);
+  document.getElementById('chat-icon').textContent = chatState.open ? '✕' : '💬';
+  if (badge) badge.style.display = chatState.open ? 'none' : 'flex';
+  if (chatState.open && !chatState.initialized) {
+    chatState.initialized = true;
+    setTimeout(() => {
+      showBotMessage('¡Hola! 👋 Soy el asistente virtual de **EntreTiempo.Psicología**.\n\nPara ofrecerte la mejor atención, ¿me regalas tu nombre? 😊');
+      resetInactivityTimer();
+    }, 400);
+  }
+  if (chatState.open && chatState.initialized) resetInactivityTimer();
+}
+
+function openChat() {
+  if (!chatState.open) toggleChat();
+}
+
+function formatText(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+function addMessage(role, text, options=[]) {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const now = new Date().toLocaleTimeString('es-CO', {hour:'2-digit', minute:'2-digit'});
+  div.innerHTML = `
+    <div class="msg-bubble">${formatText(text)}</div>
+    <div class="msg-time">${now}</div>
+  `;
+  if (options.length > 0) {
+    const optDiv = document.createElement('div');
+    optDiv.className = 'chat-options';
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'chat-option-btn';
+      btn.textContent = opt;
+      btn.onclick = () => {
+        optDiv.querySelectorAll('button').forEach(b => b.disabled = true);
+        sendUserMessage(opt);
+      };
+      optDiv.appendChild(btn);
+    });
+    div.appendChild(optDiv);
+  }
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showTyping() {
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.id = 'typing-indicator';
+  div.innerHTML = `<div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTyping() {
+  const el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+async function showBotMessage(text, options=[]) {
+  showTyping();
+  await new Promise(r => setTimeout(r, 900 + Math.random()*600));
+  removeTyping();
+  addMessage('bot', text, options);
+}
+
+// ── FLUJO DEL CHATBOT (sin API, basado en el documento) ──
+// Estados: 'awaitingName' | 'awaitingService' | 'awaitingModalidad_a' | 'awaitingModalidad_b' |
+//          'awaitingModalidad_d' | 'awaitingEducativo' | 'awaitingFinal' | 'done'
+
+let inactivityTimer = null;
+
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  if (chatState.step === 'done') return;
+  inactivityTimer = setTimeout(async () => {
+    if (!chatState.open) return;
+    await showBotMessage(
+      `⏰ Hola, ¿sigues ahí?\n\nNoto que no he recibido tu respuesta. Sin prisas, cuando puedas seguimos conversando.\n\nEn EntreTiempo.Psicología estamos para acompañarte en el momento que tú lo necesites. 🌿\n\n👉 Si quieres retomar la conversación, solo escribe **"continuar"** y volvemos al punto donde quedamos.`
+    );
+  }, 150000); // 2.5 minutos
+}
+
+function horariosTexto() {
+  return `📅 **Agenda actual (horarios disponibles):**\n\n• Lunes: 9:00 a.m. – 12:00 m / 2:00 p.m. – 6:00 p.m.\n• Martes: 9:00 a.m. – 12:00 m / 2:00 p.m. – 6:00 p.m.\n• Miércoles: 9:00 a.m. – 12:00 m / 2:00 p.m. – 6:00 p.m.\n• Jueves: 9:00 a.m. – 12:00 m / 2:00 p.m. – 6:00 p.m.\n• Viernes: 9:00 a.m. – 2:00 p.m.`;
+}
+
+async function sendUserMessage(overrideText) {
+  const input = document.getElementById('chat-input');
+  const rawText = overrideText || input.value.trim();
+  if (!rawText) return;
+  if (!overrideText) { input.value = ''; autoResize(input); }
+
+  addMessage('user', rawText);
+  resetInactivityTimer();
+
+  // Normalizar: minúsculas + sin tildes para comparación robusta
+  const normalize = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  const text = normalize(rawText);
+  const n = chatState.userName;
+
+  // ── "continuar" en cualquier momento ──
+  if (text === 'continuar') {
+    await resumeConversation();
+    return;
+  }
+
+  // ── PASO 1: recibir nombre ──
+  if (chatState.step === 'awaitingName') {
+    chatState.userName = rawText.split(' ')[0];
+    chatState.step = 'awaitingService';
+    const msg = `Gracias, **${chatState.userName}**. ¡Un gusto saludarte! 😊\n\nEn EntreTiempo.Psicología creemos que el reloj no entiende de angustia… pero nosotros sí. Por eso te ofrecemos estos servicios:\n\n👉 Por favor elige una opción:`;
+    await showBotMessage(msg, [
+      'a. Acompañamiento psicológico',
+      'b. Capacitación para empresas',
+      'c. Capacitación educativa',
+      'd. Capacitación en salud'
+    ]);
+    return;
+  }
+
+  // ── PASO 2: elegir servicio ──
+  if (chatState.step === 'awaitingService') {
+    // Detectar por botón, letra suelta o palabra clave
+    // 'text' ya está normalizado (minúsculas, sin tildes) por la función normalize()
+    let letra = '';
+    const t = text; // ya normalizado arriba
+    if (/^a\.?$/.test(t) || t.startsWith('a. ') || t.includes('acomp') || t.includes('psicol') || t.includes('terapia') || t.includes('sesion')) letra = 'a';
+    else if (/^b\.?$/.test(t) || t.startsWith('b. ') || t.includes('empresa') || t.includes('organizac') || t.includes('laboral')) letra = 'b';
+    else if (/^c\.?$/.test(t) || t.startsWith('c. ') || t.includes('educ') || t.includes('docente') || t.includes('infancia') || t.includes('padres') || t.includes('colegio') || t.includes('escuela')) letra = 'c';
+    else if (/^d\.?$/.test(t) || t.startsWith('d. ') || t.includes('salud') || t.includes('medic') || t.includes('clinic') || t.includes('hospital') || t.includes('enferm')) letra = 'd';
+    if (letra === 'a') {
+      chatState.step = 'awaitingModalidad_a';
+      await showBotMessage(
+        `Excelente, **${n}**. El acompañamiento psicológico puede ser:\n\n👉 ¿Cuál prefieres?`,
+        ['a. Modalidad presencial (solo Cúcuta)', 'b. Modalidad virtual']
+      );
+    } else if (letra === 'b') {
+      chatState.step = 'awaitingModalidad_b';
+      await showBotMessage(
+        `Perfecto, **${n}**. Para empresas ofrecemos:\n\n👉 ¿Qué modalidad prefieres?`,
+        ['a. Modalidad presencial (solo Cúcuta)', 'b. Modalidad virtual']
+      );
+    } else if (letra === 'c') {
+      chatState.step = 'awaitingEducativo';
+      await showBotMessage(
+        `Genial, **${n}**. En el ámbito educativo tenemos (solo presencial en Cúcuta):\n\n👉 Indícame el número de la opción que necesitas:`,
+        ['1. Capacitación a docentes', '2. Capacitación en primera infancia', '3. Escuela de padres', '4. Eventos de socialización']
+      );
+    } else if (letra === 'd') {
+      chatState.step = 'awaitingModalidad_d';
+      await showBotMessage(
+        `Excelente, **${n}**. En salud ofrecemos:\n\n👉 ¿Cuál prefieres?`,
+        ['a. Modalidad presencial (solo Cúcuta)', 'b. Modalidad virtual']
+      );
+    } else {
+      await showBotMessage(
+        `❌ Lo siento, **${n}**. No reconocí esa opción. Por favor usa los botones o escribe solo la letra (a, b, c o d):`,
+        ['a. Acompañamiento psicológico', 'b. Capacitación para empresas', 'c. Capacitación educativa', 'd. Capacitación en salud']
+      );
+    }
+    return;
+  }
+
+  // ── PASO 3a: modalidad acompañamiento psicológico ──
+  if (chatState.step === 'awaitingModalidad_a') {
+    const letra = text.replace(/[^ab]/g, '').charAt(0);
+    if (letra === 'a' || letra === 'b') {
+      const modalidad = letra === 'a' ? 'presencial en Cúcuta' : 'virtual';
+      chatState.step = 'awaitingFinal';
+      await showBotMessage(
+        `Gracias, **${n}**. 😊\n\nAcompañamiento psicológico **(${modalidad}):** $70.000 por sesión (duración de 1 hora a 1 hora con 20 minutos).\n\n${horariosTexto()}\n\n📅 Para agendar o solicitar más detalles, ¿te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
+        ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+      );
+    } else {
+      await showBotMessage(`❌ Opción no válida, **${n}**. Por favor elige:`, ['a. Presencial (Cúcuta)', 'b. Virtual']);
+    }
+    return;
+  }
+
+  // ── PASO 3b: modalidad empresas ──
+  if (chatState.step === 'awaitingModalidad_b') {
+    const letra = text.replace(/[^ab]/g, '').charAt(0);
+    if (letra === 'a' || letra === 'b') {
+      const modalidad = letra === 'a' ? 'presencial en Cúcuta' : 'virtual';
+      chatState.step = 'awaitingFinal';
+      await showBotMessage(
+        `Gracias, **${n}**. 😊\n\nCapacitación para empresas **(${modalidad}):** la coordinamos según tu necesidad. Disponibilidad también la coordinamos juntos.\n\n📅 ¿Te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
+        ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+      );
+    } else {
+      await showBotMessage(`❌ Opción no válida, **${n}**. Por favor elige:`, ['a. Presencial (Cúcuta)', 'b. Virtual']);
+    }
+    return;
+  }
+
+  // ── PASO 3c: sub-opción educativo ──
+  if (chatState.step === 'awaitingEducativo') {
+    // Si elige virtual, aclarar que solo es presencial
+    if (text.includes('virtual') || text === 'b') {
+      await showBotMessage(
+        `**${n}**, en el ámbito educativo solo ofrecemos modalidad **presencial en Cúcuta**. 😊\n\n¿Te gustaría continuar con alguna de estas opciones?`,
+        ['1. Capacitación a docentes', '2. Capacitación en primera infancia', '3. Escuela de padres', '4. Eventos de socialización']
+      );
+      return;
+    }
+    const num = text.replace(/[^1-4]/g, '').charAt(0);
+    let precioMsg = '';
+    if (num === '1') precioMsg = `Opción 1 – **Capacitación a docentes:** $120.000 – $150.000 por taller.`;
+    else if (num === '2') precioMsg = `Opción 2 – **Capacitación en primera infancia:** $120.000 – $150.000 por taller.`;
+    else if (num === '3') precioMsg = `Opción 3 – **Escuela de padres:** $200.000 por encuentro.`;
+    else if (num === '4') precioMsg = `Opción 4 – **Eventos de socialización:** presupuesto a consultar con nuestro equipo.`;
+    else {
+      await showBotMessage(`❌ Opción no válida, **${n}**. Por favor elige un número del 1 al 4:`,
+        ['1. Capacitación a docentes', '2. Primera infancia', '3. Escuela de padres', '4. Eventos de socialización']);
+      return;
+    }
+    chatState.step = 'awaitingFinal';
+    await showBotMessage(
+      `Gracias, **${n}**. 😊\n\n${precioMsg}\n\n📍 Solo disponible presencial en Cúcuta. La disponibilidad la coordinamos según tu necesidad.\n\n📅 ¿Te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
+      ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+    );
+    return;
+  }
+
+  // ── PASO 3d: modalidad salud ──
+  if (chatState.step === 'awaitingModalidad_d') {
+    const letra = text.replace(/[^ab]/g, '').charAt(0);
+    if (letra === 'a' || letra === 'b') {
+      const modalidad = letra === 'a' ? 'presencial en Cúcuta' : 'virtual';
+      chatState.step = 'awaitingFinal';
+      await showBotMessage(
+        `Gracias, **${n}**. 😊\n\nCapacitación en salud **(${modalidad}):** la coordinamos según tu necesidad. Disponibilidad también la coordinamos juntos.\n\n📅 ¿Te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
+        ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+      );
+    } else {
+      await showBotMessage(`❌ Opción no válida, **${n}**. Por favor elige:`, ['a. Presencial (Cúcuta)', 'b. Virtual']);
+    }
+    return;
+  }
+
+  // ── PASO FINAL: link o asesor ──
+  if (chatState.step === 'awaitingFinal') {
+    chatState.step = 'done';
+    clearTimeout(inactivityTimer);
+    if (text.includes('link') || text.includes('reserva')) {
+      await showBotMessage(
+        `Perfecto, **${n}**. 🔗 Aquí puedes reservar tu cita directamente:\n\n👉 **[Link de reserva]** *(próximamente disponible)*\n\nSi tienes alguna duda adicional, nuestro equipo estará encantado de ayudarte. ¡Hasta pronto! 💚`
+      );
+    } else {
+      await showBotMessage(
+        `Perfecto, **${n}**. Un asesor se pondrá en contacto contigo muy pronto. 😊\n\nRecuerda: *El reloj no entiende de angustia. Nosotros sí.*\n\nCuida de tu salud mental como cuidas de tu tiempo. ¡Hasta pronto! 💚`
+      );
+    }
+    setTimeout(async () => {
+      await showBotMessage(
+        `Si necesitas algo más, **${n}**, con gusto te ayudo. 😊\n\n👉 Escribe **"continuar"** para volver al menú principal o **"adios"** para finalizar.`
+      );
+      chatState.step = 'awaitingPostConv';
+    }, 3000);
+    return;
+  }
+
+  // ── POST CONVERSACIÓN: continuar o despedirse ──
+  if (chatState.step === 'awaitingPostConv') {
+    if (text.includes('adios') || text.includes('adiós') || text.includes('hasta') || text.includes('bye') || text.includes('gracias')) {
+      chatState.step = 'done';
+      clearTimeout(inactivityTimer);
+      await showBotMessage(
+        `Gracias por contactarte con **EntreTiempo.Psicología**, **${n}**. 💚\n\nRecuerda: *El reloj no entiende de angustia. Nosotros sí.*\n\nCuida de tu salud mental como cuidas de tu tiempo. ¡Hasta pronto! 🌿`
+      );
+    } else if (text === 'continuar' || text.includes('menu') || text.includes('menú') || text.includes('otra') || text.includes('más') || text.includes('mas')) {
+      await resumeConversation();
+    } else {
+      await showBotMessage(
+        `😊 Escribe **"continuar"** para volver al menú o **"adios"** para finalizar, **${n}**.`
+      );
+    }
+    return;
+  }
+
+  // Fallback genérico: ignorar texto sin sentido, recordar opciones
+  if (chatState.step === 'awaitingService') {
+    await showBotMessage(
+      `👉 Por favor elige una de las opciones usando los botones, **${n}**:`,
+      ['a. Acompañamiento psicológico', 'b. Capacitación para empresas', 'c. Capacitación educativa', 'd. Capacitación en salud']
+    );
+  } else {
+    await showBotMessage(`Escribe **"continuar"** para retomar la conversación, **${n}**. 🌿`);
+  }
+}
+
+async function resumeConversation() {
+  const n = chatState.userName || '';
+  if (chatState.step === 'awaitingService' || !chatState.step) {
+    await showBotMessage(
+      `¡Bienvenido de nuevo${n ? ', **' + n + '**' : ''}! 😊 ¿En qué te puedo ayudar?\n\n👉 Elige una opción:`,
+      ['a. Acompañamiento psicológico', 'b. Capacitación para empresas', 'c. Capacitación educativa', 'd. Capacitación en salud']
+    );
+  } else {
+    chatState.step = 'awaitingService';
+    await showBotMessage(
+      `¡Aquí estoy, **${n}**! Retomamos desde el principio. 😊\n\n👉 ¿En qué te puedo ayudar?`,
+      ['a. Acompañamiento psicológico', 'b. Capacitación para empresas', 'c. Capacitación educativa', 'd. Capacitación en salud']
+    );
+  }
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendUserMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+</script>
+</body>
+</html>

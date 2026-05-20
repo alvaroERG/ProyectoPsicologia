@@ -63,7 +63,57 @@
     text-decoration: none;
   }
   .nav-cta:hover { background: var(--teal) !important; }
-  @media (max-width: 700px) { .nav-links { display: none; } }
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 6px;
+    z-index: 200;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+    transition: all .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  @media (max-width: 700px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: white;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px 5vw 28px;
+      gap: 0;
+      border-bottom: 1px solid var(--gray-mid);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      width: 100%;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--gray-mid);
+      font-size: 15px;
+    }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-cta {
+      margin-top: 12px;
+      width: 100%;
+      text-align: center;
+    }
+  }
 
   /* ── PAGE WRAPPER ── */
   .page {
@@ -224,12 +274,15 @@
       <div class="sub">Psicología</div>
     </div>
   </a>
-  <div class="nav-links">
-    <a href="/#servicios">Servicios</a>
-    <a href="/#precios">Tarifas</a>
-    <a href="/#horarios">Horarios</a>
-    <a href="/#contacto">Contacto</a>
-    <a href="/redes">Redes</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="/#servicios" onclick="closeMenu()">Servicios</a>
+    <a href="/#precios" onclick="closeMenu()">Tarifas</a>
+    <a href="/#horarios" onclick="closeMenu()">Horarios</a>
+    <a href="/#contacto" onclick="closeMenu()">Contacto</a>
+    <a href="/redes" onclick="closeMenu()">Redes</a>
     <a href="/conocenos" class="active">Conócenos</a>
     <a href="/#contacto" class="nav-cta">Consultar ahora</a>
   </div>
@@ -311,5 +364,17 @@
   </div>
 </div>
 
+<script>
+function toggleMenu() {
+  const nav = document.getElementById('nav-links');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('nav-links').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+</script>
 </body>
 </html>

@@ -387,11 +387,59 @@
   .typing-dot:nth-child(3) { animation-delay: 0.4s; }
   @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
 
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 6px;
+    z-index: 200;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+    transition: all .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; padding-top: 90px; }
     .hero-visual { display: none; }
-    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 72px; left: 0; right: 0;
+      background: white;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px 5vw 28px;
+      gap: 0;
+      border-bottom: 1px solid var(--gray-mid);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a {
+      width: 100%;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--gray-mid);
+      font-size: 15px;
+    }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-cta {
+      margin-top: 12px;
+      width: 100%;
+      text-align: center;
+    }
     .footer-inner { grid-template-columns: 1fr; gap: 30px; }
     #chat-window { width: calc(100vw - 30px); right: 15px; }
   }
@@ -411,13 +459,16 @@
       <div class="sub">Psicología</div>
     </div>
   </a>
-  <div class="nav-links">
-    <a href="#servicios">Servicios</a>
-    <a href="#precios">Tarifas</a>
-    <a href="#horarios">Horarios</a>
-    <a href="#contacto">Contacto</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#servicios" onclick="closeMenu()">Servicios</a>
+    <a href="#precios" onclick="closeMenu()">Tarifas</a>
+    <a href="#horarios" onclick="closeMenu()">Horarios</a>
+    <a href="#contacto" onclick="closeMenu()">Contacto</a>
     <a href="/conocenos">Conócenos</a>
-    <a href="#" class="nav-cta" onclick="openChat()">Consultar ahora</a>
+    <a href="#" class="nav-cta" onclick="closeMenu(); openChat()">Consultar ahora</a>
   </div>
 </nav>
 
@@ -972,6 +1023,17 @@ async function resumeConversation() {
       ['a. Acompañamiento psicológico', 'b. Capacitación para empresas', 'c. Capacitación educativa', 'd. Capacitación en salud']
     );
   }
+}
+
+function toggleMenu() {
+  const nav = document.getElementById('nav-links');
+  const btn = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('nav-links').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
 }
 
 function handleKey(e) {

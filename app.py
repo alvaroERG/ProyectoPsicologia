@@ -6,5 +6,13 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+@app.route('/conocenos')
+def conocenos():
+    return render_template('conocenos.html')
+
+@app.route('/redes')
+def redes():
+    return render_template('redes.html')
+
 if __name__ == "__main__":
     app.run()

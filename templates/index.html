@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
+<meta charse     t="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EntreTiempo.Psicología</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
@@ -643,7 +643,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    © 2025 EntreTiempo.Psicología · Todos los derechos reservados
+    © 2026 EntreTiempo.Psicología · Todos los derechos reservados
   </div>
 </footer>
 
@@ -730,6 +730,8 @@ function openChat() {
 function formatText(text) {
   return text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:underline;font-weight:500;">$1</a>')
     .replace(/\n/g, '<br>');
 }
 
@@ -783,9 +785,6 @@ async function showBotMessage(text, options=[]) {
   addMessage('bot', text, options);
 }
 
-// ── FLUJO DEL CHATBOT (sin API, basado en el documento) ──
-// Estados: 'awaitingName' | 'awaitingService' | 'awaitingModalidad_a' | 'awaitingModalidad_b' |
-//          'awaitingModalidad_d' | 'awaitingEducativo' | 'awaitingFinal' | 'done'
 
 let inactivityTimer = null;
 
@@ -889,7 +888,7 @@ async function sendUserMessage(overrideText) {
       chatState.step = 'awaitingFinal';
       await showBotMessage(
         `Gracias, **${n}**. 😊\n\nAcompañamiento psicológico **(${modalidad}):** $70.000 por sesión (duración de 1 hora a 1 hora con 20 minutos).\n\n${horariosTexto()}\n\n📅 Para agendar o solicitar más detalles, ¿te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
-        ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+        ['🔗 Link de reserva directa', '💬 Contactar por WhatsApp']
       );
     } else {
       await showBotMessage(`❌ Opción no válida, **${n}**. Por favor elige:`, ['a. Presencial (Cúcuta)', 'b. Virtual']);
@@ -905,7 +904,7 @@ async function sendUserMessage(overrideText) {
       chatState.step = 'awaitingFinal';
       await showBotMessage(
         `Gracias, **${n}**. 😊\n\nCapacitación para empresas **(${modalidad}):** la coordinamos según tu necesidad. Disponibilidad también la coordinamos juntos.\n\n📅 ¿Te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
-        ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+        ['🔗 Link de reserva directa', '💬 Contactar por WhatsApp']
       );
     } else {
       await showBotMessage(`❌ Opción no válida, **${n}**. Por favor elige:`, ['a. Presencial (Cúcuta)', 'b. Virtual']);
@@ -937,7 +936,7 @@ async function sendUserMessage(overrideText) {
     chatState.step = 'awaitingFinal';
     await showBotMessage(
       `Gracias, **${n}**. 😊\n\n${precioMsg}\n\n📍 Solo disponible presencial en Cúcuta. La disponibilidad la coordinamos según tu necesidad.\n\n📅 ¿Te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
-      ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+      ['🔗 Link de reserva directa', '💬 Contactar por WhatsApp']
     );
     return;
   }
@@ -950,7 +949,7 @@ async function sendUserMessage(overrideText) {
       chatState.step = 'awaitingFinal';
       await showBotMessage(
         `Gracias, **${n}**. 😊\n\nCapacitación en salud **(${modalidad}):** la coordinamos según tu necesidad. Disponibilidad también la coordinamos juntos.\n\n📅 ¿Te parece si te paso el link de reserva directa o prefieres que te contacte un asesor humano?`,
-        ['🔗 Link de reserva directa', '👤 Que me contacte un asesor']
+        ['🔗 Link de reserva directa', '💬 Contactar por WhatsApp']
       );
     } else {
       await showBotMessage(`❌ Opción no válida, **${n}**. Por favor elige:`, ['a. Presencial (Cúcuta)', 'b. Virtual']);
@@ -964,11 +963,11 @@ async function sendUserMessage(overrideText) {
     clearTimeout(inactivityTimer);
     if (text.includes('link') || text.includes('reserva')) {
       await showBotMessage(
-        `Perfecto, **${n}**. 🔗 Aquí puedes reservar tu cita directamente:\n\n👉 **[Link de reserva]** *(próximamente disponible)*\n\nSi tienes alguna duda adicional, nuestro equipo estará encantado de ayudarte. ¡Hasta pronto! 💚`
+        `Perfecto, **${n}**. 🔗 Aquí puedes reservar tu cita directamente:\n\n👉 **[Agendar cita ahora](https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0CAOwuRllsrmN_Od2NtcNkRqNsMJlk3kRkGgJ8HOQVf50e3SsmltVvcvNZBQgQ8o-fuFeFYpi1)**\n\nSi tienes alguna duda adicional, nuestro equipo estará encantado de ayudarte. ¡Hasta pronto! 💚`
       );
     } else {
       await showBotMessage(
-        `Perfecto, **${n}**. Un asesor se pondrá en contacto contigo muy pronto. 😊\n\nRecuerda: *El reloj no entiende de angustia. Nosotros sí.*\n\nCuida de tu salud mental como cuidas de tu tiempo. ¡Hasta pronto! 💚`
+        `¡Contáctanos, **${n}**! Si necesitas un asesor, escríbenos directamente por WhatsApp y con gusto te ayudamos. 💚\n\n👉 **[Escribir por WhatsApp](https://wa.me/573019790698)**`
       );
     }
     setTimeout(async () => {

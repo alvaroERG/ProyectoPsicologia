@@ -247,6 +247,27 @@
   .card-cta:hover { background: var(--teal); }
   .card-cta svg { width: 16px; height: 16px; fill: white; }
 
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy-dark); color: white;
+    padding: 60px 5vw 30px;
+    margin-top: 80px;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px; padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  @media (max-width: 700px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 30px; }
+  }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.8; max-width: 300px; margin-top: 14px; }
+  .footer-col h4 { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 16px; }
+  .footer-col a { display: block; color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; margin-bottom: 10px; transition: color .2s; }
+  .footer-col a:hover { color: white; }
+  .footer-bottom { text-align: center; padding-top: 24px; font-size: 13px; color: rgba(255,255,255,0.35); }
+
   /* ── DECORATIVE BG ── */
   .bg-blob {
     position: fixed; border-radius: 50%;
@@ -264,7 +285,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="/" class="nav-logo">
+  <a href="index.html" class="nav-logo">
     <div class="nav-logo-icon">
       <div class="sq sq-navy">H</div>
       <div class="sq sq-teal">M</div>
@@ -278,13 +299,13 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="nav-links">
-    <a href="/#servicios" onclick="closeMenu()">Servicios</a>
-    <a href="/#precios" onclick="closeMenu()">Tarifas</a>
-    <a href="/#horarios" onclick="closeMenu()">Horarios</a>
-    <a href="/#contacto" onclick="closeMenu()">Contacto</a>
-    <a href="/redes" onclick="closeMenu()">Redes</a>
-    <a href="/conocenos" class="active">Conócenos</a>
-    <a href="/#contacto" class="nav-cta">Consultar ahora</a>
+    <a href="index.html#servicios" onclick="closeMenu()">Servicios</a>
+    <a href="index.html#precios" onclick="closeMenu()">Tarifas</a>
+    <a href="index.html#horarios" onclick="closeMenu()">Horarios</a>
+    <a href="index.html#contacto" onclick="closeMenu()">Contacto</a>
+    <a href="conocenos.html" class="active">Conócenos</a>
+    <a href="redes.html" onclick="closeMenu()">Redes</a>
+    <a href="index.html#contacto" class="nav-cta">Consultar ahora</a>
   </div>
 </nav>
 
@@ -344,7 +365,7 @@
       <strong>Super poder:</strong> Transformo patrones mentales en nuevas versiones de ti mismo.
     </p>
 
-    <a href="#" target="_blank" class="card-cta">
+    <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0CAOwuRllsrmN_Od2NtcNkRqNsMJlk3kRkGgJ8HOQVf50e3SsmltVvcvNZBQgQ8o-fuFeFYpi1" target="_blank" class="card-cta">
       <svg viewBox="0 0 24 24">
         <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
       </svg>
@@ -411,6 +432,36 @@
 
   </div>
 </div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-logo-icon" style="margin-bottom:10px">
+        <div class="sq sq-navy">H</div>
+        <div class="sq sq-teal">M</div>
+      </div>
+      <div class="brand" style="color:white;font-size:16px;letter-spacing:.04em">ENTRETIEMPO</div>
+      <div class="sub" style="color:var(--teal-light);letter-spacing:.15em;font-size:10px">— PSICOLOGÍA —</div>
+      <p>El reloj no entiende de angustia. Nosotros sí.<br>Cuida de tu salud mental como cuidas de tu tiempo.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <a href="index.html#servicios">Acompañamiento psicológico</a>
+      <a href="index.html#servicios">Capacitación empresas</a>
+      <a href="index.html#servicios">Ámbito educativo</a>
+      <a href="index.html#servicios">Ámbito salud</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <a href="#">📍 Cúcuta, Norte de Santander</a>
+      <a href="#">🌐 Atención virtual (Colombia)</a>
+      <a href="redes.html">🔗 Nuestras redes</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2026 EntreTiempo.Psicología · Todos los derechos reservados
+  </div>
+</footer>
 
 <script>
 function toggleMenu() {
